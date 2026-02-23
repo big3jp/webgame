@@ -94,35 +94,12 @@ h1 {
     min-width: 300px;
 }
 
-/* シスター切り替え */
-.sister-switch {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.sister-switch button {
-    background: #ffccbc;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.2s;
-    font-family: inherit;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.sister-switch button.active {
-    background: var(--accent-red);
-    color: white;
-    transform: scale(1.05);
-}
-
-.sister-switch button:hover:not(.active) {
-    background: #ffab91;
+/* シスター名表示 */
+.sister-name {
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+    color: var(--accent-red);
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
 }
 
 /* シスターのビジュアル */
@@ -133,6 +110,42 @@ h1 {
     align-items: center;
     justify-content: center;
     position: relative;
+    width: 100%;
+    min-height: 0;
+}
+
+.image-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-grow: 1;
+    min-height: 0;
+    gap: 10px;
+}
+
+.nav-arrow {
+    background: rgba(255, 255, 255, 0.7);
+    border: 2px solid var(--accent-red);
+    color: var(--accent-red);
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: 0.2s;
+    z-index: 10;
+    flex-shrink: 0;
+}
+
+.nav-arrow:hover {
+    background: var(--accent-red);
+    color: white;
+    transform: scale(1.1);
 }
 
 .speech-bubble {
@@ -198,31 +211,30 @@ h1 {
 
 .sister-image-wrapper {
     width: 100%;
-    max-width: 600px;
-    height: auto;
-    aspect-ratio: 3 / 4;
-    max-height: 65vh;
-    margin: 10px auto;
+    height: 100%;
+    max-width: 500px;
+    margin: 0;
     position: relative;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.5);
+    background: transparent;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), inset 0 0 10px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 3px solid var(--accent-red);
+    border: none;
+    box-shadow: none;
 }
 
 #sister-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    /* はみ出しを防ぎ、全体を表示する */
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 /* 衣装セレクター */
 .costume-selector-container {
-    margin-top: 10px;
+    margin-top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -258,12 +270,32 @@ h1 {
 }
 
 .sister-stats {
-    background: #fff;
+    background: var(--panel-bg);
     padding: 10px;
     border-radius: 10px;
     width: 80%;
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.compact-stats {
+    padding: 10px 15px;
+    margin-bottom: 0;
+    width: 90%;
+    box-sizing: border-box;
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.affection {
+    margin: 0;
+    font-weight: bold;
+    color: var(--text-color);
 }
 
 .costume-progress {
@@ -296,7 +328,8 @@ h1 {
 .stats-box h2 {
     margin: 0;
     color: var(--accent-red);
-    font-size: 2.5rem;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    white-space: nowrap;
 }
 
 .stats-box p {
@@ -321,6 +354,76 @@ h1 {
     padding-bottom: 5px;
     color: var(--accent-red);
 }
+
+.facility-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent-red);
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.facility-header h3 {
+    border-bottom: none;
+    margin: 0;
+    padding: 0;
+}
+
+.buy-multiplier-switch {
+    display: flex;
+    gap: 5px;
+}
+
+.buy-multiplier-switch button {
+    background: #ffccbc;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.buy-multiplier-switch button.active {
+    background: var(--accent-red);
+    color: white;
+}
+
+#upgrades-container {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+#upgrades-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#upgrades-container::-webkit-scrollbar-thumb {
+    background-color: var(--accent-red);
+    border-radius: 3px;
+}
+
+#achievements-container {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+#achievements-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#achievements-container::-webkit-scrollbar-thumb {
+    background-color: var(--accent-red);
+    border-radius: 3px;
+}
+
 
 /* リストアイテム系 */
 .buy-item {

@@ -1,15 +1,15 @@
 // 修道院テーマの施設データ (インフレを激しくする設定)
 const facilityData = [
     { id: 'f1', name: '教会の古い麺棒', desc: '信者からの寄付の品。手作業で生地を伸ばす。', baseCost: 15, basePPS: 0.5, icon: '🥖' },
-    { id: 'f2', name: '修道院のレンガ窯', desc: '中庭にある古いレンガ窯。薪で香ばしく焼ける。', baseCost: 100, basePPS: 5, icon: '🧱' },
-    { id: 'f3', name: '祈りのパイ工房', desc: '空き部屋を改装した手作り工房。シスターたちが手伝う。', baseCost: 1200, basePPS: 40, icon: '🏠' },
-    { id: 'f4', name: '聖なるチェリー農園', desc: '裏山の土地を開墾し、極上のチェリーを量産。', baseCost: 15000, basePPS: 350, icon: '🍒' },
-    { id: 'f5', name: 'カラクリパイ焼き機', desc: '村の職人が作ってくれた自動装置。異端ではない。', baseCost: 200000, basePPS: 3200, icon: '⚙️' },
-    { id: 'f6', name: 'パイ配送馬車', desc: '隣町や王都までチェリーパイを売り叩く。', baseCost: 3500000, basePPS: 42000, icon: '🐎' },
-    { id: 'f7', name: '大聖堂のパイ工場', desc: '大聖堂を一部改築して工場ラインを新設。罰当たり？', baseCost: 50000000, basePPS: 500000, icon: '🏭' },
-    { id: 'f8', name: 'パイ焼きの天使', desc: 'パイの香りに誘われて天から舞い降りた助っ人。', baseCost: 800000000, basePPS: 6500000, icon: '👼' },
-    { id: 'f9', name: '神聖パイ召喚陣', desc: '祈りの力で直接パイを空間から具現化する奇跡。', baseCost: 12000000000, basePPS: 85000000, icon: '✨' },
-    { id: 'f10', name: 'チェリーパイ教国', desc: '「我々の信仰はパイにある」一つの国がパイのために動く。', baseCost: 200000000000, basePPS: 1200000000, icon: '👑' }
+    { id: 'f2', name: '修道院のレンガ窯', desc: '中庭にある古いレンガ窯。薪で香ばしく焼ける。', baseCost: 150, basePPS: 5, icon: '🧱' },
+    { id: 'f3', name: '祈りのパイ工房', desc: '空き部屋を改装した手作り工房。シスターたちが手伝う。', baseCost: 1800, basePPS: 40, icon: '🏠' },
+    { id: 'f4', name: '聖なるチェリー農園', desc: '裏山の土地を開墾し、極上のチェリーを量産。', baseCost: 24000, basePPS: 350, icon: '🍒' },
+    { id: 'f5', name: 'カラクリパイ焼き機', desc: '村の職人が作ってくれた自動装置。異端ではない。', baseCost: 360000, basePPS: 3200, icon: '⚙️' },
+    { id: 'f6', name: 'パイ配送馬車', desc: '隣町や王都までチェリーパイを売り叩く。', baseCost: 6500000, basePPS: 45000, icon: '🐎' },
+    { id: 'f7', name: '大聖堂のパイ工場', desc: '大聖堂を一部改築して工場ラインを新設。罰当たり？', baseCost: 150000000, basePPS: 600000, icon: '🏭' },
+    { id: 'f8', name: 'パイ焼きの天使', desc: 'パイの香りに誘われて天から舞い降りた助っ人。', baseCost: 3500000000, basePPS: 8500000, icon: '👼' },
+    { id: 'f9', name: '神聖パイ召喚陣', desc: '祈りの力で直接パイを空間から具現化する奇跡。', baseCost: 90000000000, basePPS: 120000000, icon: '✨' },
+    { id: 'f10', name: 'チェリーパイ教国', desc: '「我々の信仰はパイにある」一つの国がパイのために動く。', baseCost: 2500000000000, basePPS: 1800000000, icon: '👑' }
 ];
 
 const upgradeData = [];
@@ -61,6 +61,8 @@ facilityData.forEach((f) => {
     { p: 50000000, n: "パイ長者", i: '💸' },
     { p: 1000000000, n: "ビリオンパイ", i: '💎' },
     { p: 1000000000000, n: "トリリオンパイ", i: '🌌' },
+    { p: 1000000000000000, n: "クアッドリリオンパイ", i: '🎇' },
+    { p: 1000000000000000000, n: "クィンティリオンパイ", i: '🌟' },
 ].forEach(a => {
     achievementData.push({ id: `a_pies_${a.p}`, name: a.n, desc: `累計${a.p.toLocaleString()}枚のパイを焼いた`, icon: a.i, totalPies: a.p });
 });
@@ -78,6 +80,7 @@ let state = {
     clickMultiplier: 1,
     ppsMultiplier: 1,
     clickPPSPercentage: 0,
+    buyAmount: 1,
     facilities: facilityData.map(f => ({ id: f.id, count: 0 })),
     upgrades: [],
     achievements: [],
@@ -98,7 +101,22 @@ const sistersConfig = {
             "焼きたてのチェリーパイ、村の人たちが喜んでくれるといいな。",
             "エリと一緒に、この修道院を必ず立て直します！",
             "神様も、甘いものは好きでしょうか？",
-            "粉まみれになってしまいました…ふふっ。"
+            "粉まみれになってしまいました…ふふっ。",
+            "あ、お祈りの時間でした！…でも手が離せませんね。",
+            "パイの香りが村中まで届いているみたいです！",
+            "今日採れたチェリーは一段と甘い気がします。",
+            "焦がさないように気をつけないと…じーっ…",
+            "いつか、大聖堂のように立派な修道院にしたいですね。",
+            "孤児院の子供たちにも、おすそ分けに行きましょう！",
+            "パイを焼く手が止まりません…これも神の導きでしょうか？",
+            "クリック…いえ、生地をこね続けると、腕が鍛えられますね。",
+            "あの、もっと手伝っていただけますか？",
+            "借金を返すまで、弱音は吐けません！",
+            "エリが横で一生懸命なところ、可愛いですよね。",
+            "新しいオーブンが欲しいなんて…贅沢でしょうか。",
+            "パイの売り上げで、やっと窓ガラスが直せそうです！",
+            "ふう…少し休憩しませんか？なんて、冗談です！",
+            "チェリーの赤色は神聖な色なんですよ。たぶん。"
         ],
         costumeMessages: {
             0: "シスター服は神聖な気持ちになりますが、粉がつきやすいですね。",
@@ -114,7 +132,22 @@ const sistersConfig = {
             "このチェリー、裏庭の木から採れたのよ。甘くて美味しいわ。",
             "修道院の借金…ふふっ、笑えなくなってきたわね。どんどん焼くわよ。",
             "パイがいっぱい売れれば、温かいスープが毎日飲めるようになるかもね。",
-            "焦がさないように気をつけて。"
+            "焦がさないように気をつけて。",
+            "まったく、神様は私たちに試練を与えすぎじゃないかしら。",
+            "ほらほら、手が止まってるわよ。借金取りが来ちゃうわ。",
+            "クレアは真面目よね。私が見張ってないと無理しそうだわ。",
+            "生地は休ませることも大切だけど、今は私たちが働く番ね。",
+            "ちょっと味見……うん、完璧な出来栄えね！",
+            "パイの中に愛と祈り、そして執念を込めているわ。",
+            "王国軍に納品できれば、借金なんてすぐ返せるのに。",
+            "見て、この焼き色。芸術的だと思わない？",
+            "パイ作りのおかげで、二の腕が引き締まってきた気がするわ。",
+            "また窯の温度が下がってる！急いで薪をくべて！",
+            "パイを運ぶ馬車が足りないわね。もっと稼がないと。",
+            "私が作ったパイの虜になった人が村にたくさんいるみたい。",
+            "これだけ焼けば、そろそろ「パイ修道院」って呼ばれそうね。",
+            "疲れたら言いなさい。私が代わってあげる。",
+            "チェリーの種抜き作業、誰か代わってくれないかしら……"
         ],
         costumeMessages: {
             0: "この服、動きにくいけど…贅沢は言ってられないわね。",
@@ -138,11 +171,14 @@ const els = {
     affectionDisplay: document.getElementById('affection-display'),
     costumeSelect: document.getElementById('costume-select'),
     costumeProgressBar: document.getElementById('costume-progress-bar'),
-    switchBlonde: document.getElementById('switch-blonde'),
-    switchBlack: document.getElementById('switch-black'),
+    prevSister: document.getElementById('prev-sister'),
+    nextSister: document.getElementById('next-sister'),
+    sisterNameDisplay: document.getElementById('sister-name-display'),
     speechBubble: document.getElementById('speech-bubble'),
     speechText: document.getElementById('speech-text'),
-    notificationContainer: document.getElementById('notification-container')
+    notificationContainer: document.getElementById('notification-container'),
+    buyX1: document.getElementById('buy-x1'),
+    buyX10: document.getElementById('buy-x10')
 };
 
 // ユーティリティ
@@ -180,8 +216,12 @@ function init() {
 
     // イベントリスナー
     els.sisterButton.addEventListener('click', handlePieClick);
-    els.switchBlonde.addEventListener('click', () => setSister('blonde'));
-    els.switchBlack.addEventListener('click', () => setSister('black'));
+
+    // シスター切り替え
+    const toggleSister = () => setSister(state.currentSister === 'blonde' ? 'black' : 'blonde');
+    els.prevSister.addEventListener('click', toggleSister);
+    els.nextSister.addEventListener('click', toggleSister);
+
     els.costumeSelect.addEventListener('change', (e) => {
         state.sisters[state.currentSister].selectedCostume = parseInt(e.target.value);
         updateSisterUI();
@@ -189,6 +229,8 @@ function init() {
         const sConf = sistersConfig[sid];
         showSpeech(sConf.costumeMessages[state.sisters[sid].selectedCostume]);
     });
+    els.buyX1.addEventListener('click', () => setBuyMultiplier(1));
+    els.buyX10.addEventListener('click', () => setBuyMultiplier(10));
 
     // ゲームループ (100ms)
     setInterval(gameLoop, 100);
@@ -251,15 +293,20 @@ function updateUI() {
     document.querySelectorAll('.facility-item').forEach(el => {
         const id = el.dataset.id;
         const sf = state.facilities.find(f => f.id === id);
-        const fd = facilityData.find(f => f.id === id);
-        const cost = getFacilityCost(fd.baseCost, sf.count);
-        el.querySelector('.item-cost').innerText = formatNumber(cost) + ' パイ';
-        el.querySelector('.item-count').innerText = sf.count;
+        const calc = getFacilityCostAndAmount(id);
 
-        if (state.pies >= cost) {
-            el.classList.remove('disabled');
-        } else {
+        el.querySelector('.item-count').innerText = sf.count + " / 100";
+
+        if (calc.maxed) {
+            el.querySelector('.item-cost').innerText = "MAX";
             el.classList.add('disabled');
+        } else {
+            el.querySelector('.item-cost').innerText = formatNumber(calc.cost) + ' パイ';
+            if (state.pies >= calc.cost) {
+                el.classList.remove('disabled');
+            } else {
+                el.classList.add('disabled');
+            }
         }
     });
 
@@ -280,8 +327,28 @@ function updateUI() {
     });
 }
 
-function getFacilityCost(baseCost, count) {
-    return Math.floor(baseCost * Math.pow(1.15, count));
+function getFacilityCostAndAmount(id) {
+    const fd = facilityData.find(f => f.id === id);
+    const sf = state.facilities.find(f => f.id === id);
+
+    let toBuy = state.buyAmount;
+    if (sf.count + toBuy > 100) {
+        toBuy = 100 - sf.count;
+    }
+    if (toBuy <= 0) return { cost: 0, amount: 0, maxed: true };
+
+    let cost = 0;
+    for (let i = 0; i < toBuy; i++) {
+        cost += Math.floor(fd.baseCost * Math.pow(1.15, sf.count + i));
+    }
+    return { cost, amount: toBuy, maxed: false };
+}
+
+function setBuyMultiplier(amount) {
+    state.buyAmount = amount;
+    els.buyX1.classList.toggle('active', amount === 1);
+    els.buyX10.classList.toggle('active', amount === 10);
+    updateUI();
 }
 
 // 施設・アップグレードのレンダリング
@@ -289,7 +356,7 @@ function renderFacilities() {
     els.facilitiesContainer.innerHTML = '';
     facilityData.forEach(fd => {
         const sf = state.facilities.find(f => f.id === fd.id);
-        const cost = getFacilityCost(fd.baseCost, sf.count);
+        const calc = getFacilityCostAndAmount(fd.id);
 
         const div = document.createElement('div');
         div.className = 'buy-item facility-item disabled';
@@ -300,8 +367,8 @@ function renderFacilities() {
                 <h4>${fd.name}</h4>
                 <p style="font-size: 0.75rem;">${fd.desc}</p>
             </div>
-            <div class="item-cost">${formatNumber(cost)} パイ</div>
-            <div class="item-count">${sf.count}</div>
+            <div class="item-cost">${calc.maxed ? "MAX" : formatNumber(calc.cost) + " パイ"}</div>
+            <div class="item-count">${sf.count} / 100</div>
         `;
         div.addEventListener('click', () => buyFacility(fd.id));
         els.facilitiesContainer.appendChild(div);
@@ -326,7 +393,7 @@ function checkUpgradesVisibility() {
 function renderUpgrades() {
     els.upgradesContainer.innerHTML = '';
 
-    // 表示上限20個
+    // 表示上限4個
     let renderedCount = 0;
     // コストが低い順にソートして表示
     const sortedVisibles = [...visibleUpgrades]
@@ -335,7 +402,7 @@ function renderUpgrades() {
         .sort((a, b) => a.cost - b.cost);
 
     sortedVisibles.forEach(ud => {
-        if (renderedCount >= 30) return; // 制限
+        if (renderedCount >= 4) return; // 制限
 
         const div = document.createElement('div');
         div.className = 'buy-item upgrade-item disabled';
@@ -367,9 +434,14 @@ function renderAchievements() {
     countHeader.innerText = `実績解除率: ${unlockedCount} / ${achievementData.length}`;
     els.achievementsContainer.appendChild(countHeader);
 
-    achievementData.forEach(ad => {
+    const unlockedList = state.achievements.slice().reverse().map(id => achievementData.find(a => a.id === id));
+    const lockedList = achievementData.filter(ad => !state.achievements.includes(ad.id));
+
+    const combined = [...unlockedList, ...lockedList];
+
+    combined.forEach(ad => {
+        if (!ad) return;
         const isUnlocked = state.achievements.includes(ad.id);
-        // 大量のため、未解除で条件が遠すぎるものは非表示にしてスッキリさせても良いが、今回は全て表示する
         const div = document.createElement('div');
         div.className = `achievement-item ${isUnlocked ? 'unlocked' : ''}`;
         div.id = `ach-${ad.id}`;
@@ -386,13 +458,13 @@ function renderAchievements() {
 
 // アクション系
 function buyFacility(id) {
-    const fd = facilityData.find(f => f.id === id);
-    const sf = state.facilities.find(f => f.id === id);
-    const cost = getFacilityCost(fd.baseCost, sf.count);
+    const calc = getFacilityCostAndAmount(id);
+    if (calc.maxed) return;
 
-    if (state.pies >= cost) {
-        state.pies -= cost;
-        sf.count++;
+    if (state.pies >= calc.cost) {
+        state.pies -= calc.cost;
+        const sf = state.facilities.find(f => f.id === id);
+        sf.count += calc.amount;
         updateUI();
     }
 }
@@ -460,8 +532,6 @@ function showClickNumber(e, amount) {
 // シスター系
 function setSister(id) {
     state.currentSister = id;
-    els.switchBlonde.classList.toggle('active', id === 'blonde');
-    els.switchBlack.classList.toggle('active', id === 'black');
 
     // 会話リセット
     els.speechBubble.classList.add('hidden');
@@ -473,6 +543,8 @@ function updateSisterUI() {
     const sid = state.currentSister;
     const sState = state.sisters[sid];
     const sConf = sistersConfig[sid];
+
+    els.sisterNameDisplay.innerText = sConf.name;
 
     let newLevel = 0;
     if (sState.affection >= COSTUME_THRESHOLDS[2]) newLevel = 2;
