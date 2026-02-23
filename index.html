@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チェリーパイを焼こう！</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>チェリーパイを焼こう！</h1>
+    </header>
+
+    <main class="game-container">
+        <!-- 左側：シスター＆クリックエリア -->
+        <section class="panel left-panel">
+            <div class="sister-switch">
+                <button id="switch-blonde" class="active">クレア</button>
+                <button id="switch-black">エリ</button>
+            </div>
+
+            <div class="sister-container">
+                <div class="speech-bubble hidden" id="speech-bubble">
+                    <p id="speech-text">...</p>
+                </div>
+                <!-- クリックエリアとしてボタン化 -->
+                <button id="sister-button" class="sister-image-wrapper">
+                    <img id="sister-image" src="images/blonde_0.png" alt="シスター"
+                        onerror="this.src=''; this.className='placeholder-box';">
+                </button>
+
+                <div class="sister-stats">
+                    <p>好感度: <span id="affection-display">0</span></p>
+                    <div class="costume-progress">
+                        <div id="costume-progress-bar" class="progress-bar"></div>
+                    </div>
+                    <div class="costume-selector-container">
+                        <label for="costume-select">衣装:</label>
+                        <select id="costume-select">
+                            <option value="0">シスター服</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- 中央：ステータス＆アップグレード＆実績 -->
+        <section class="panel center-panel">
+            <div class="stats-box">
+                <h2>🍒 <span id="pies-count">0</span> パイ</h2>
+                <p>1秒あたり: <span id="pps-count">0</span> パイ (pps)</p>
+                <p class="small-text">累計パイ: <span id="total-pies-count">0</span></p>
+            </div>
+
+            <div class="section-block">
+                <h3>✨ アップグレード</h3>
+                <div id="upgrades-container" class="upgrades-list">
+                    <!-- JSで動的に生成 -->
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3>🏆 実績</h3>
+                <div id="achievements-container" class="achievements-list">
+                    <!-- JSで動的に生成 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 右側：施設 -->
+        <section class="panel right-panel">
+            <h3>🏗️ 施設</h3>
+            <div id="facilities-container" class="facilities-list">
+                <!-- JSで動的に生成 -->
+            </div>
+        </section>
+    </main>
+
+    <!-- UI通知用 -->
+    <div id="notification-container"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
